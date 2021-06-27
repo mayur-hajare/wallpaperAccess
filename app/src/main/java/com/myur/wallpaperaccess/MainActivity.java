@@ -1,167 +1,214 @@
 package com.myur.wallpaperaccess;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
+import com.myur.wallpaperaccess.adapter.wallpaerAdapter;
+import com.myur.wallpaperaccess.interfaces.RecyclerViewClickListener;
+import com.myur.wallpaperaccess.modles.wallpaperModel;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    static final float END_SCALE = 0.7f;
-    ImageView menuIcon;
-    LinearLayout contentView;
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-    RecyclerView recyclerView, topRecycleView;
+public class MainActivity extends AppCompatActivity  {
+    RecyclerView recyclerView;
+    wallpaerAdapter wallpaperAdapter;
+    List<wallpaperModel> wallpaperModelList;
+    int pageNumber = 1;
 
-    EditText searchEt;
-    ImageView SearchIv;
+    Boolean isScrolling  = false;
+    int currentItems,totalItems,scrollOutItems;
+    String url ="https://api.pexels.com/v1/curated/?page="+pageNumber+"&per_page=80";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().hide();
+        recyclerView = findViewById(R.id.recyclerView);
+        wallpaperModelList = new ArrayList<>();
+        wallpaperAdapter = new wallpaerAdapter(this,wallpaperModelList);
 
-        menuIcon = findViewById(R.id.menu_icon);
-        contentView = findViewById(R.id.content_view);
-        drawerLayout = findViewById(R.id.LayoutDrawable);
-        navigationView = findViewById(R.id.navigation_view);
+        recyclerView.setAdapter(wallpaperAdapter);
 
-        navigationDrawer();
-        //Navigation drawer profile
-        View headerView = navigationView.getHeaderView(0);
-        ImageView appLogo = headerView.findViewById(R.id.app_Image);
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
+        recyclerView.setLayoutManager(gridLayoutManager);
 
-        //Search
-        searchEt = findViewById(R.id.searchEv);
-        SearchIv = findViewById(R.id.search_image);
-        SearchIv.setOnClickListener(new View.OnClickListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onClick(View v) {
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
 
-                Toast.makeText(getApplicationContext(), "Search Button Clicked", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //This method is used so that your splash activity
-        //can cover the entire screen.
-
-        setContentView(R.layout.activity_main);
-        //this will bind your MainActivity.class file with activity_main.
-
-
-    }
-
-    private void navigationDrawer() {
-
-        navigationView.bringToFront();
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.action_home);
-
-        menuIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                    Toast.makeText(getApplicationContext(), "Search Button Clicked", Toast.LENGTH_SHORT).show();
-                } else {
-                    drawerLayout.openDrawer(GravityCompat.START);
-                    Toast.makeText(getApplicationContext(), " Button Clicked", Toast.LENGTH_SHORT).show();
+                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+                    isScrolling= true;
                 }
-                Toast.makeText(getApplicationContext(), " Clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-        //anim Nav
-        animateNavigationDrawer();
-
-    }
-
-    private void animateNavigationDrawer() {
-        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-                final float diffScaledOffset = slideOffset * (1 - END_SCALE);
-                final float offScale = 1 - diffScaledOffset;
-                contentView.setScaleX(offScale);
-                contentView.setScaleY(offScale);
-
-                //translate
-                final float xOffset = drawerView.getWidth() * slideOffset;
-                final float xOffsetDiff = contentView.getWidth() * diffScaledOffset / 2;
-                final float xTranslation = xOffset - xOffsetDiff;
-                contentView.setTranslationX(xTranslation);
-
 
             }
 
             @Override
-            public void onDrawerOpened(@NonNull View drawerView) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
 
-            }
+                currentItems = gridLayoutManager.getChildCount();
+                totalItems = gridLayoutManager.getItemCount();
+                scrollOutItems = gridLayoutManager.findFirstVisibleItemPosition();
 
-            @Override
-            public void onDrawerClosed(@NonNull View drawerView) {
+                if(isScrolling && (currentItems+scrollOutItems==totalItems)){
+                    isScrolling = false;
+                    fetchWallpaper();
+                }
 
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
 
             }
         });
+
+
+        fetchWallpaper();
+
+    }
+
+    public void fetchWallpaper(){
+
+        StringRequest request = new StringRequest(Request.Method.GET,url ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try{
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            JSONArray jsonArray= jsonObject.getJSONArray("photos");
+
+                            int length = jsonArray.length();
+
+                            for(int i=0;i<length;i++){
+
+                                JSONObject object = jsonArray.getJSONObject(i);
+
+                                int id = object.getInt("id");
+
+                                JSONObject objectImages = object.getJSONObject("src");
+
+                                String orignalUrl = objectImages.getString("original");
+                                String mediumUrl = objectImages.getString("medium");
+
+                                wallpaperModel wallpaperModel = new wallpaperModel(id,orignalUrl,mediumUrl);
+                                wallpaperModelList.add(wallpaperModel);
+
+
+
+                            }
+
+                            wallpaperAdapter.notifyDataSetChanged();
+                            pageNumber++;
+
+                        }catch (JSONException e){
+
+                        }
+
+
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("Authorization","563492ad6f9170000100000110445f433efc4226b6b636932b4d9115");
+
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(request);
+
     }
 
     @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-
-        } else {
-            super.onBackPressed();
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-            case R.id.action_home:
-                Toast.makeText(getApplicationContext(), "Home Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.action_treading:
-                Toast.makeText(getApplicationContext(), "Tred Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.action_mostview:
-                Toast.makeText(getApplicationContext(), "Most View Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.action_LogOut:
-                Toast.makeText(getApplicationContext(), "LogOut Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.action_AboutUs:
-                Toast.makeText(getApplicationContext(), "About Us Clicked", Toast.LENGTH_SHORT).show();
-                break;
+        if(item.getItemId()==R.id.nav_search){
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            final EditText editText = new EditText(this);
+            editText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+            alert.setMessage("Enter Category e.g. Nature");
+            alert.setTitle("Search Wallpaper");
+
+            alert.setView(editText);
+
+            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                    String query = editText.getText().toString().toLowerCase();
+
+                    url = "https://api.pexels.com/v1/search/?page="+pageNumber+"&per_page=80&query="+query;
+                    wallpaperModelList.clear();
+                    fetchWallpaper();
+
+                }
+            });
+
+            alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+
+            alert.show();
+
 
 
         }
-        return true;
+
+        return super.onOptionsItemSelected(item);
     }
 }
