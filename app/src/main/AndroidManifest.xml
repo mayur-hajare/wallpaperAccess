@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme">
-        <activity android:name=".FullScreenWallpaper"></activity>
+        <activity android:name=".FullScreenWallpaper" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -22,7 +22,9 @@
 
         <activity android:name=".ForgotActivity" />
         <activity android:name=".SignupActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity" >
+
+        </activity>
         <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,9 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashActivity">
 
-        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
