@@ -5,7 +5,6 @@
     android:id="@+id/LayoutDrawable"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_gray"
     tools:context=".MainActivity">
 
     <com.google.android.material.navigation.NavigationView
@@ -49,16 +48,19 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp">
+            >
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#FFFFFF"
                 android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -102,16 +104,18 @@
 
                 </RelativeLayout>
 
+
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="5dp"
+
                     android:scrollbarSize="0dp"
                     android:scrollbarStyle="outsideInset">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp">
+                        android:layout_height="50dp"
+                        >
 
 
                         <TextView
@@ -124,13 +128,13 @@
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
                             android:text="Suggested"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:textSize="16dp" />
 
 
                         <TextView
-                            android:id="@+id/cat"
-                            android:layout_width="50dp"
+                            android:id="@+id/kwallpaper"
+                            android:layout_width="120dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_margin="10dp"
@@ -138,25 +142,12 @@
                             android:background="@drawable/corner"
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
-                            android:text="Cat"
-                            android:textColor="@color/black"
+                            android:text="4k wallpaper"
+                            android:textColor="@color/white"
                             android:textSize="16dp" />
 
                         <TextView
-                            android:id="@+id/car"
-                            android:layout_width="50dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="5dp"
-                            android:background="@drawable/corner"
-                            android:fontFamily="@font/adamina"
-                            android:gravity="center"
-                            android:text="Car"
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
-
-                        <TextView
-                            android:id="@+id/nature"
+                            android:id="@+id/supercar"
                             android:layout_width="100dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
@@ -164,8 +155,23 @@
                             android:background="@drawable/corner"
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
-                            android:text="Nature"
-                            android:textColor="@color/black"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/car"
+                            android:text="SuperCar"
+                            android:textColor="@color/white"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/hdbackground"
+                            android:layout_width="140dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/corner"
+                            android:fontFamily="@font/adamina"
+                            android:gravity="center"
+                            android:text="Hd Background"
+                            android:textColor="@color/white"
                             android:textSize="16dp" />
 
                         <TextView
@@ -173,12 +179,12 @@
                             android:layout_width="100dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            android:layout_marginStart="5dp"
+                            android:layout_marginStart="10dp"
                             android:background="@drawable/corner"
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
-                            android:text="landscape"
-                            android:textColor="@color/black"
+                            android:text="Landscape"
+                            android:textColor="@color/white"
                             android:textSize="16dp" />
 
                         <TextView
@@ -186,47 +192,73 @@
                             android:layout_width="50dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            android:layout_marginStart="5dp"
+                            android:layout_marginStart="10dp"
                             android:background="@drawable/corner"
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
                             android:text="City"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:textSize="16dp" />
 
                         <TextView
+                            android:id="@+id/car"
                             android:layout_width="50dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            android:layout_marginStart="5dp"
+                            android:layout_marginStart="10dp"
                             android:background="@drawable/corner"
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
-                            android:text="CAR"
-                            android:textColor="@color/black"
+                            android:text="Car"
+                            android:textColor="@color/white"
                             android:textSize="16dp" />
 
                         <TextView
-                            android:layout_width="50dp"
+                            android:id="@+id/nature"
+                            android:layout_width="100dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            android:layout_marginStart="5dp"
+                            android:layout_marginStart="10dp"
                             android:background="@drawable/corner"
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
-                            android:text="CAR"
-                            android:textColor="@color/black"
+                            android:text="Nature"
+                            android:textColor="@color/white"
+                            android:textSize="16dp" />
+                        <TextView
+                            android:id="@+id/cat"
+                            android:layout_width="50dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/corner"
+                            android:fontFamily="@font/adamina"
+                            android:gravity="center"
+                            android:text="Cat"
+                            android:textColor="@color/white"
+                            android:textSize="16dp" />
+                        <TextView
+                            android:id="@+id/cbedit"
+                            android:layout_width="200dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/corner"
+                            android:fontFamily="@font/adamina"
+                            android:gravity="center"
+                            android:text="Desktop Backgrounds"
+                            android:textColor="@color/white"
                             android:textSize="16dp" />
 
                     </LinearLayout>
 
                 </HorizontalScrollView>
 
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    xmlns:tools="http://schemas.android.com/tools"
+                <LinearLayout
+                    android:id="@+id/LinearView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/white"
                     tools:context=".MainActivity">
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -237,12 +269,16 @@
 
                 </LinearLayout>
 
-                <TextView
+                <Button
                     android:id="@+id/more"
+                    android:layout_margin="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="More" />
+                    android:text="More"
+                    android:background="@drawable/corner"
+                    android:textStyle="bold"
+                    android:textSize="10dp" />
 
             </LinearLayout>
 

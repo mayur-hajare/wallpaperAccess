@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class FullScreenWallpaper extends AppCompatActivity {
     String originalUrl = "";
     PhotoView photoView;
     ProgressBar progressBar;
+    ImageView Back;
 
     private int i = 0;
 
@@ -41,7 +43,17 @@ public class FullScreenWallpaper extends AppCompatActivity {
         originalUrl = intent.getStringExtra("originalUrl");
         photoView = findViewById(R.id.photoView);
         progressBar = findViewById(R.id.progressBar);
+        Back = findViewById(R.id.back);
         progressBar.setVisibility(View.VISIBLE);
+
+
+        Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent1);
+            }
+        });
         i = progressBar.getProgress();
         new Thread(new Runnable() {
             public void run() {
@@ -52,7 +64,7 @@ public class FullScreenWallpaper extends AppCompatActivity {
                         public void run() {
                             progressBar.setProgress(i);
                             progressBar.setVisibility(View.INVISIBLE);
-                           // txtView.setText(i+"/"+pgsBar.getMax());
+                            // txtView.setText(i+"/"+pgsBar.getMax());
                         }
                     });
                     try {
@@ -68,8 +80,6 @@ public class FullScreenWallpaper extends AppCompatActivity {
 
         progressBar.setVisibility(View.INVISIBLE);
         Glide.with(this).load(originalUrl).into(photoView);
-
-
 
 
     }

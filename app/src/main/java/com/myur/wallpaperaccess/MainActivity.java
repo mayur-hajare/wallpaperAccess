@@ -1,5 +1,7 @@
 package com.myur.wallpaperaccess;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,7 +11,6 @@ import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,19 +39,20 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
+    LinearLayout linearLayout;
     wallpaerAdapter wallpaperAdapter;
     List<wallpaperModel> wallpaperModelList;
     int pageNumber = 1;
     EditText seaechet;
     ImageView searchiv;
     TextView More;
-    String query = "nature";
-    ScrollView scrollView;
-    TextView cat, car, nature, landscape, city;
+    String query = "LandScape";
+    androidx.core.widget.NestedScrollView scrollView;
+    TextView sugg, kwallpaper, supercar, cat, car, nature, landscape, city, hdbackground, cbedit;
 
     Boolean isScrolling = false;
     int currentItems, totalItems, scrollOutItems;
-    String url = "https://api.pexels.com/v1/curated/?page=" + pageNumber + "&per_page=80";
+    String url = "https://api.pexels.com/v1/search/?page=" + pageNumber + "&per_page=80&query=" + query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +64,35 @@ public class MainActivity extends AppCompatActivity {
         wallpaperModelList = new ArrayList<>();
         wallpaperAdapter = new wallpaerAdapter(this, wallpaperModelList);
 
+        scrollView = findViewById(R.id.scrollView);
+        linearLayout = findViewById(R.id.LinearView);
         seaechet = findViewById(R.id.searchEv);
         searchiv = findViewById(R.id.search_image);
         More = findViewById(R.id.more);
         cat = findViewById(R.id.cat);
         car = findViewById(R.id.car);
         nature = findViewById(R.id.nature);
+        kwallpaper = findViewById(R.id.kwallpaper);
+        hdbackground = findViewById(R.id.hdbackground);
+        supercar = findViewById(R.id.supercar);
+        cbedit = findViewById(R.id.cbedit);
         landscape = findViewById(R.id.landscape);
         city = findViewById(R.id.city);
+        sugg = findViewById(R.id.suggTitle);
+
+        sugg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String query = seaechet.getText().toString().toLowerCase();
+
+                url = "https://api.pexels.com/v1/search/?page=" + pageNumber + "&per_page=80&query=" + "LandScape";
+                wallpaperModelList.clear();
+                fetchWallpaper();
+
+            }
+        });
+
         cat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +158,58 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        kwallpaper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                seaechet.setText("4kWallpaper");
 
+                String query = seaechet.getText().toString().toLowerCase();
+
+                url = "https://api.pexels.com/v1/search/?page=" + pageNumber + "&per_page=80&query=" + query;
+                wallpaperModelList.clear();
+                fetchWallpaper();
+
+            }
+        });
+        supercar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                seaechet.setText("SuperCar");
+
+                String query = seaechet.getText().toString().toLowerCase();
+
+                url = "https://api.pexels.com/v1/search/?page=" + pageNumber + "&per_page=80&query=" + query;
+                wallpaperModelList.clear();
+                fetchWallpaper();
+
+            }
+        });
+        hdbackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                seaechet.setText("HDBackground");
+
+                String query = seaechet.getText().toString().toLowerCase();
+
+                url = "https://api.pexels.com/v1/search/?page=" + pageNumber + "&per_page=80&query=" + query;
+                wallpaperModelList.clear();
+                fetchWallpaper();
+
+            }
+        });
+        cbedit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                seaechet.setText("DesktopBackgrounds");
+
+                String query = seaechet.getText().toString().toLowerCase();
+
+                url = "https://api.pexels.com/v1/search/?page=" + pageNumber + "&per_page=80&query=" + query;
+                wallpaperModelList.clear();
+                fetchWallpaper();
+
+            }
+        });
         recyclerView.setAdapter(wallpaperAdapter);
 
         final StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayout.VERTICAL);
@@ -177,6 +251,11 @@ public class MainActivity extends AppCompatActivity {
                 url = "https://api.pexels.com/v1/search/?page=" + pageNumber + "&per_page=80&query=" + query;
                 wallpaperModelList.clear();
                 fetchWallpaper();
+
+                androidx.core.widget.NestedScrollView sv = scrollView;
+                View highlightedItem = linearLayout;// find the LinearLayout or View that you need to scroll to which is inside this ScrollView
+                int height = (int) highlightedItem.getY();
+                sv.scrollTo(0, height);
 
                 //scrollView.fullScroll(ScrollView.FOCUS_UP);
                 // scrollView.fullScroll(ScrollView.FOCUS_UP);
@@ -273,22 +352,24 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         if (item.getItemId() == R.id.action_treading) {
-            url = "https://api.pexels.com/v1/search/?page=" + pageNumber + "&per_page=80&query=" + "Treading";
+            seaechet.setText("Trending");
+            url = "https://api.pexels.com/v1/search/?page=" + pageNumber + "&per_page=80&query=" + "Trending";
             wallpaperModelList.clear();
             fetchWallpaper();
         }
         if (item.getItemId() == R.id.action_mostview) {
-            url = "https://api.pexels.com/v1/search/?page=" + pageNumber + "&per_page=80&query=" + "cat ";
+            seaechet.setText("Most View");
+            url = "https://api.pexels.com/v1/search/?page=" + pageNumber + "&per_page=80&query=" + "Most View";
             wallpaperModelList.clear();
             fetchWallpaper();
         }
-        if (item.getItemId() == R.id.action_LogOut) {
+       /* if (item.getItemId() == R.id.action_LogOut) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
 
 
 
-            /*AlertDialog.Builder alert = new AlertDialog.Builder(this);
+       */     /*AlertDialog.Builder alert = new AlertDialog.Builder(this);
             final EditText editText = new EditText(this);
 
             editText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -323,6 +404,30 @@ public class MainActivity extends AppCompatActivity {
 
 
 */
+        if (item.getItemId() == R.id.action_AboutUs) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Wallpaper Access");
+            alert.setCancelable(false);
+            alert.setMessage("Wallpaper Access provides high quality and completely free stock photos licensed under the Pexels license. All photos are nicely tagged, searchable and also easy to discover through our discover pages.\n" +
+                    "\n" +
+                    "Photos\n" +
+                    "We have hundreds of thousands free stock photos and every day new high resolution photos will be added. All photos are hand-picked from photos uploaded by our users or sourced from free image websites. We make sure all published pictures are high-quality and licensed under the Pexels license.\n" +
+                    "\n" +
+                    "Photo Sources\n" +
+                    "Only free images from our community of photographers are added to our photo database. We constantly try to deliver as many high quality free stock photos as possible to the creatives who use our website.\nMission\n" +
+                    "We help millions of designers, writers, artists, programmers and other creators to get access to beautiful photos that they can use freely which empowers them to create amazing products, designs, stories, websites, apps, art and other work. We call it: \"Empowering Creators\"\n" +
+                    "\n" +
+                    "Contribute\n" +
+                    "Upload your own pictures to support the Pexels community:" +
+                    "\n\nDeveloper\nMayur Hajare\nEmail:- Mayurshajare2002@gmail.com\n");
+            alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+
+            alert.show();
         }
 
         return super.onOptionsItemSelected(item);

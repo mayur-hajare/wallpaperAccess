@@ -16,11 +16,11 @@
         android:icon="@drawable/ic_action_mostview"
         android:orderInCategory="100"
         app:showAsAction="never" />
-    <item android:id="@+id/action_LogOut"
+   <!-- <item android:id="@+id/action_LogOut"
         android:title="LogOut"
         android:orderInCategory="100"
         android:icon="@drawable/ic_action_logout"
-        app:showAsAction="never" />
+        app:showAsAction="never" />-->
     <item android:id="@+id/action_AboutUs"
         android:title="About Us"
         android:orderInCategory="100"
