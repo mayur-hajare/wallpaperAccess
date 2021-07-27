@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="          Loading....\nYour Network is weak" />
+        android:text="@string/loading_nyour_network_is_weak" />
 
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/photoView"
@@ -45,7 +45,7 @@
         android:onClick="SetWallpaperEvent"
         android:padding="10dp"
         android:layout_margin="5dp"
-        android:text="SET Wallpaper" />
+        android:text="@string/set_wallpaper" />
 
     <Button
         android:id="@+id/btnDownloadWallpaper"
@@ -56,6 +56,6 @@
         android:background="@drawable/corner"
         android:onClick="DownloadWallpaperEvent"
         android:padding="10dp"
-        android:text="Download Wallpaper" />
+        android:text="@string/download_wallpaper" />
 
 </RelativeLayout>

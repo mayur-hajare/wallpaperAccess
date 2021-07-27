@@ -11,4 +11,17 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="loading_nyour_network_is_weak">Loading....\nYour Network is weak</string>
+    <string name="download_wallpaper">Download Wallpaper</string>
+    <string name="set_wallpaper">SET Wallpaper</string>
+    <string name="suggested">Suggested</string>
+    <string name="_4k_wallpaper">4k wallpaper</string>
+    <string name="supercar">SuperCar</string>
+    <string name="hd_background">Hd Background</string>
+    <string name="landscape">Landscape</string>
+    <string name="car">Car</string>
+    <string name="nature">Nature</string>
+    <string name="cat">Cat</string>
+    <string name="desktop_backgrounds">Desktop Backgrounds</string>
+    <string name="more">More</string>
 </resources>

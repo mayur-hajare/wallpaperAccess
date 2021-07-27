@@ -127,7 +127,7 @@
                             android:background="@drawable/corner"
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
-                            android:text="Suggested"
+                            android:text="@string/suggested"
                             android:textColor="@color/white"
                             android:textSize="16dp" />
 
@@ -142,7 +142,7 @@
                             android:background="@drawable/corner"
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
-                            android:text="4k wallpaper"
+                            android:text="@string/_4k_wallpaper"
                             android:textColor="@color/white"
                             android:textSize="16dp" />
 
@@ -157,7 +157,7 @@
                             android:gravity="center"
                             android:scaleType="fitCenter"
                             android:src="@drawable/car"
-                            android:text="SuperCar"
+                            android:text="@string/supercar"
                             android:textColor="@color/white"
                             android:textSize="16dp" />
 
@@ -170,7 +170,7 @@
                             android:background="@drawable/corner"
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
-                            android:text="Hd Background"
+                            android:text="@string/hd_background"
                             android:textColor="@color/white"
                             android:textSize="16dp" />
 
@@ -183,7 +183,7 @@
                             android:background="@drawable/corner"
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
-                            android:text="Landscape"
+                            android:text="@string/landscape"
                             android:textColor="@color/white"
                             android:textSize="16dp" />
 
@@ -209,7 +209,7 @@
                             android:background="@drawable/corner"
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
-                            android:text="Car"
+                            android:text="@string/car"
                             android:textColor="@color/white"
                             android:textSize="16dp" />
 
@@ -222,7 +222,7 @@
                             android:background="@drawable/corner"
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
-                            android:text="Nature"
+                            android:text="@string/nature"
                             android:textColor="@color/white"
                             android:textSize="16dp" />
                         <TextView
@@ -234,7 +234,7 @@
                             android:background="@drawable/corner"
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
-                            android:text="Cat"
+                            android:text="@string/cat"
                             android:textColor="@color/white"
                             android:textSize="16dp" />
                         <TextView
@@ -246,7 +246,7 @@
                             android:background="@drawable/corner"
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
-                            android:text="Desktop Backgrounds"
+                            android:text="@string/desktop_backgrounds"
                             android:textColor="@color/white"
                             android:textSize="16dp" />
 
@@ -275,7 +275,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="More"
+                    android:text="@string/more"
                     android:background="@drawable/corner"
                     android:textStyle="bold"
                     android:textSize="10dp" />
