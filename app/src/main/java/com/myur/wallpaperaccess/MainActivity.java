@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.myur.wallpaperaccess.adapter.wallpaerAdapter;
 import com.myur.wallpaperaccess.modles.wallpaperModel;
 
@@ -36,6 +46,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -49,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     String query = "LandScape";
     androidx.core.widget.NestedScrollView scrollView;
     TextView sugg, kwallpaper, supercar, cat, car, nature, landscape, city, hdbackground, cbedit;
+    private InterstitialAd mInterstitialAd;
+    private AdView mAdView;
 
     Boolean isScrolling = false;
     int currentItems, totalItems, scrollOutItems;
@@ -79,6 +93,48 @@ public class MainActivity extends AppCompatActivity {
         landscape = findViewById(R.id.landscape);
         city = findViewById(R.id.city);
         sugg = findViewById(R.id.suggTitle);
+
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest1 = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest1);
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                // Code to be executed when an ad finishes loading.
+            }
+
+            @Override
+            public void onAdFailedToLoad(LoadAdError adError) {
+                super.onAdFailedToLoad(adError);
+                mAdView.loadAd(adRequest1);
+                // Code to be executed when an ad request fails.
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+
+            @Override
+            public void onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+        });
 
         sugg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,6 +298,49 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(MainActivity.this, "ca-app-pub-3940256099942544/1033173712", adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd = interstitialAd;
+                        Log.i(TAG, "onAdLoaded");
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Log.i(TAG, loadAdError.getMessage());
+                        mInterstitialAd = null;
+                    }
+                });
+        /*mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
+            @Override
+            public void onAdDismissedFullScreenContent() {
+                // Called when fullscreen content is dismissed.
+                Log.d("TAG", "The ad was dismissed.");
+            }
+
+            @Override
+            public void onAdFailedToShowFullScreenContent(AdError adError) {
+                // Called when fullscreen content failed to show.
+                Log.d("TAG", "The ad failed to show.");
+            }
+
+            @Override
+            public void onAdShowedFullScreenContent() {
+                // Called when fullscreen content is shown.
+                // Make sure to set your reference to null so you don't
+                // show it a second time.
+                mInterstitialAd = null;
+                Log.d("TAG", "The ad was shown.");
+            }
+        });*/
+
+
         More.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -252,6 +351,12 @@ public class MainActivity extends AppCompatActivity {
                 wallpaperModelList.clear();
                 fetchWallpaper();
 
+                if (mInterstitialAd != null) {
+                    mInterstitialAd.show(MainActivity.this);
+                } else {
+                    Log.d("TAG", "The interstitial ad wasn't ready yet.");
+                }
+
                 androidx.core.widget.NestedScrollView sv = scrollView;
                 View highlightedItem = linearLayout;// find the LinearLayout or View that you need to scroll to which is inside this ScrollView
                 int height = (int) highlightedItem.getY();
@@ -261,6 +366,7 @@ public class MainActivity extends AppCompatActivity {
                 // scrollView.fullScroll(ScrollView.FOCUS_UP);
             }
         });
+
         searchiv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -419,7 +525,7 @@ public class MainActivity extends AppCompatActivity {
                     "\n" +
                     "Contribute\n" +
                     "Upload your own pictures to support the Pexels community:" +
-                    "\n\nDeveloper\nMayur Hajare\nEmail:- Mayurshajare2002@gmail.com\n");
+                    "\n\nDeveloper\nMayur Hajare\nEmail:- cyou73703@gmail.com\n");
             alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {

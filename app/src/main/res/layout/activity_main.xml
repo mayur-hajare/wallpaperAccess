@@ -47,8 +47,7 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
 
             <LinearLayout
@@ -114,8 +113,7 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        >
+                        android:layout_height="50dp">
 
 
                         <TextView
@@ -156,7 +154,6 @@
                             android:fontFamily="@font/adamina"
                             android:gravity="center"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/car"
                             android:text="@string/supercar"
                             android:textColor="@color/white"
                             android:textSize="16dp" />
@@ -225,6 +222,7 @@
                             android:text="@string/nature"
                             android:textColor="@color/white"
                             android:textSize="16dp" />
+
                         <TextView
                             android:id="@+id/cat"
                             android:layout_width="50dp"
@@ -237,6 +235,7 @@
                             android:text="@string/cat"
                             android:textColor="@color/white"
                             android:textSize="16dp" />
+
                         <TextView
                             android:id="@+id/cbedit"
                             android:layout_width="200dp"
@@ -271,18 +270,34 @@
 
                 <Button
                     android:id="@+id/more"
-                    android:layout_margin="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/more"
+                    android:layout_margin="15dp"
                     android:background="@drawable/corner"
-                    android:textStyle="bold"
-                    android:textSize="10dp" />
+                    android:text="@string/more"
+                    android:textSize="10dp"
+                    android:textStyle="bold" />
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/adView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    ads:adSize="BANNER"
+                    android:layout_gravity="center"
+                    android:background="@color/black"
+                    ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+                </com.google.android.gms.ads.AdView>
 
             </LinearLayout>
 
+
+
+
         </androidx.core.widget.NestedScrollView>
+
 
     </LinearLayout>
 
