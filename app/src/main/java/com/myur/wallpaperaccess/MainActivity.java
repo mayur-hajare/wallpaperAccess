@@ -26,9 +26,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
@@ -300,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
         });
         AdRequest adRequest = new AdRequest.Builder().build();
 
-        InterstitialAd.load(MainActivity.this, "ca-app-pub-3940256099942544/1033173712", adRequest,
+        InterstitialAd.load(MainActivity.this, "ca-app-pub-1494402303083028/4602113199", adRequest,
                 new InterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
@@ -317,7 +319,8 @@ public class MainActivity extends AppCompatActivity {
                         mInterstitialAd = null;
                     }
                 });
-        /*mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
+/*
+        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
             @Override
             public void onAdDismissedFullScreenContent() {
                 // Called when fullscreen content is dismissed.
